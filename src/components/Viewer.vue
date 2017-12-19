@@ -89,7 +89,13 @@ export default {
         return;
       }
 
-      return !!(d.FNumber);
+      return !!(d.FNumber ||
+        d.FocalLength ||
+        d.ExposureTime ||
+        d.Flash ||
+        d.ISO ||
+        d.ISOSpeedRatings ||
+        (d.MeteringMode && d.MeteringMode !== 'Unknown' && d.MeteringMode !== 'Other'));
     },
     imagePosition() {
       if (!this.img) {

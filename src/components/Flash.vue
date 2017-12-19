@@ -42,7 +42,7 @@ export default {
   font-size: 11px;
   left: 22px;
   position: absolute;
-  top: 19px;
+  top: 13px;
   width: 60px;
 }
 
