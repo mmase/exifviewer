@@ -1,5 +1,5 @@
 .container {
-  padding-top: 15px;
+  padding-top: 20px;
   width: 33.3%;
 }
 
@@ -7,4 +7,13 @@
   display: inline-block;
   font-size: 13px;
   position: relative;
+}
+
+.icon {
+  width: 20px;
+}
+
+.value {
+  margin-left: 3px;
+  top: -5px;
 }

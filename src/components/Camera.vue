@@ -1,14 +1,14 @@
 <template>
   <div :class="$style.camera">
     <div :class="$style.cameraIcon" v-if="model">
-      <img :class="$style.cameraIcon" :src="`../public/img/cameras/${icon}.png`">
+      <img :class="$style.cameraIcon" :src="`../public/img/cameras/${icon}.png`" title="Camera">
     </div>
     <div :class="$style.content">
       <div :class="$style.model" v-if="model">
         {{model}}
       </div>
       <div :class="[$style.lens, {[$style.lensOnly]: !model}]" v-if="lens">
-        <img :class="$style.lensIcon" :src="`../public/img/icons/lens.png`">
+        <img :class="$style.lensIcon" :src="`../public/img/icons/lens.png`" title="Lens">
         <div :class="$style.lensModel">{{lens}}</div>
       </div>
     </div>

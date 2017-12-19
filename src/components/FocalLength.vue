@@ -1,6 +1,6 @@
 <template>
   <div :class="$style.container">
-    <img :class="$style.icon" :src="`../public/img/icons/focal-length.png`">
+    <img :class="$style.icon" :src="`../public/img/icons/focal-length.png`" title="Focal length">
     <div :class="$style.value">{{formattedFocalLength}}</div>
   </div>
 </template>
@@ -21,12 +21,7 @@ export default {
 <style module lang="scss">
 @import 'captureData';
 
-.icon {
-  width: 20px;
-}
-
 .value {
-  margin-left: 3px;
-  top: -5px;
+  top: -6px;
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
   <div :class="$style.container">
-    <img :class="$style.icon" :src="`../public/img/icons/shutter-speed.png`">
+    <img :class="$style.icon" :src="`../public/img/icons/shutter-speed.png`" title="Shutter speed">
     <div :class="$style.value">{{shutterSpeed}}</div>
   </div>
 </template>
@@ -43,12 +43,7 @@ export default {
 <style module lang="scss">
 @import 'captureData';
 
-.icon {
-  width: 20px;
-}
-
 .value {
-  margin-left: 3px;
-  top: -5px;
+  top: -7px;
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
   <div :class="$style.container">
-    <img :class="$style.icon" :src="`../public/img/icons/aperture.png`">
+    <img :class="$style.icon" :src="`../public/img/icons/aperture.png`" title="Aperture">
     <div :class="$style.value">ƒ/{{formattedFNumber}}</div>
   </div>
 </template>
@@ -19,13 +19,4 @@ export default {
 
 <style module lang="scss">
 @import 'captureData';
-
-.icon {
-  width: 20px;
-}
-
-.value {
-  margin-left: 3px;
-  top: -5px;
-}
 </style>

@@ -11,6 +11,9 @@
             <Aperture :fnumber="imageData.FNumber" v-if="imageData.FNumber"/>
             <FocalLength :focalLength="imageData.FocalLength" v-if="imageData.FocalLength"/>
             <ShutterSpeed :exposureTime="imageData.ExposureTime" v-if="imageData.ExposureTime"/>
+            <Flash :flash="imageData.Flash" v-if="imageData.Flash"/>
+            <Iso :iso="imageData.ISO || imageData.ISOSpeedRatings" v-if="imageData.ISO || imageData.ISOSpeedRatings"/>
+            <MeteringMode :meteringMode="imageData.MeteringMode" v-if="imageData.MeteringMode && imageData.MeteringMode !== 'Unknown' && imageData.MeteringMode !== 'Other'"/>
           </div>
         </template>
       </template>
@@ -32,6 +35,9 @@ import Camera from './Camera.vue';
 import Aperture from './Aperture.vue';
 import FocalLength from './FocalLength.vue';
 import ShutterSpeed from './ShutterSpeed.vue';
+import Iso from './Iso.vue';
+import Flash from './Flash.vue';
+import MeteringMode from './MeteringMode.vue';
 
 export default {
   props: ['img'],
@@ -43,6 +49,9 @@ export default {
     Aperture,
     FocalLength,
     ShutterSpeed,
+    Iso,
+    Flash,
+    MeteringMode,
   },
 
   data() {
