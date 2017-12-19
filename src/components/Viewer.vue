@@ -3,7 +3,11 @@
     <div :class="[$style.camera, {[$style.active]: img}]" v-html="cameraSvg"></div>
     <div :class="$style.viewer">
       <template v-if="imageData">
-        <Camera :model="imageData.Model" :lens="imageData.LensModel" v-if="imageData.Model || imageData.LensModel"/>
+        <Spinner v-if="!imageData.ready"/>
+        <template v-else>
+          <Limited v-if="imageData.LimitedData"/>
+          <Camera :model="imageData.Model" :lens="imageData.LensModel" v-if="imageData.Model || imageData.LensModel"/>
+        </template>
       </template>
       <div v-else :class="$style.noData">
         No data available for this image.
@@ -17,12 +21,16 @@ import { EXIF } from 'exif-js';
 import exiftool from 'exiftool.js';
 import _ from 'lodash';
 import cameraSvg from '../icons/camera.svg';
+import Spinner from './Spinner.vue';
+import Limited from './Limited.vue';
 import Camera from './Camera.vue';
 
 export default {
   props: ['img'],
 
   components: {
+    Spinner,
+    Limited,
     Camera,
   },
 
@@ -34,9 +42,20 @@ export default {
   },
 
   watch: {
-    img() {
+    img(img) {
+      if (img) {
+        this.imageData = {
+          ready: false,
+        };
+      }
+
       this.getImageData()
-        .then(data => this.imageData = data)
+        .then(data => {
+          this.imageData = {
+            ready: true,
+            ...data,
+          };
+        })
         .catch(() => this.imageData = false);
     },
   },
@@ -209,9 +228,9 @@ $finalOpacity: .92;
   left: -6px;
   margin: 0 12px;
   opacity: $finalOpacity;
-  padding: 10px;
+  padding: 20px;
   position: relative;
-  width: 300px;
+  width: 275px;
 
   &::before {
     content: '';
