@@ -227,10 +227,10 @@ $finalOpacity: .92;
   font-size: 12px;
   left: -6px;
   margin: 0 12px;
+  min-width: 275px;
   opacity: $finalOpacity;
-  padding: 20px;
+  padding: 15px;
   position: relative;
-  width: 275px;
 
   &::before {
     content: '';
