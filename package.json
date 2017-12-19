@@ -1,0 +1,40 @@
+{
+  "name": "exif",
+  "version": "1.0.0",
+  "description": "",
+  "main": "bundle.js",
+  "dependencies": {
+    "exif-js": "^2.3.0",
+    "exiftool.js": "^0.3.0",
+    "lodash": "^4.17.4",
+    "vue": "^2.5.11"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-eslint": "^8.0.3",
+    "babel-loader": "^7.1.2",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "css-loader": "^0.28.7",
+    "eslint": "^4.13.1",
+    "eslint-plugin-behance": "^1.1.0",
+    "eslint-plugin-vue": "^4.0.0-beta.2",
+    "eslint-preset-behance": "^6.0.0",
+    "http-server": "^0.10.0",
+    "node-sass": "^4.7.2",
+    "sass-loader": "^6.0.6",
+    "svg-inline-loader": "^0.8.0",
+    "vue-eslint-parser": "^2.0.1-beta.2",
+    "vue-loader": "^13.6.0",
+    "vue-style-loader": "^3.0.3",
+    "vue-template-compiler": "^2.5.11",
+    "webpack": "^3.10.0"
+  },
+  "scripts": {
+    "babel": "babel --presets es2015 js/main.js -o build/main.bundle.js",
+    "start": "npm run webpack -- --progress --colors --watch",
+    "webpack": "webpack"
+  },
+  "author": "",
+  "license": "ISC"
+}

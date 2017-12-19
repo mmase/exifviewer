@@ -1,0 +1,26 @@
+{
+  "extends": [
+    "./node_modules/eslint-preset-behance/.eslintrc",
+    "plugin:vue/essential"
+  ],
+  "env": {
+    "browser": true
+  },
+  "parserOptions": {
+    "ecmaVersion": 7,
+    "parser": "babel-eslint",
+    "sourceType": "module"
+  },
+  "rules": {
+    "complexity": ["error", 10],
+    "max-depth": ["error", 3],
+    "max-statements": ["error", 25],
+    "no-alert": "error",
+    "no-console": "error",
+    "object-curly-spacing": ["error", "always"],
+    "object-shorthand": "off",
+    "spaced-comment": ["error", "always"],
+    "wrap-iife": ["error", "inside"],
+    "vue/no-duplicate-attributes": "error"
+  }
+}
