@@ -7,6 +7,11 @@
         <template v-else>
           <Limited v-if="imageData.LimitedData"/>
           <Camera :model="imageData.Model" :lens="imageData.LensModel" v-if="imageData.Model || imageData.LensModel"/>
+          <div :class="$style.captureData" v-if="hasCaptureData">
+            <Aperture :fnumber="imageData.FNumber" v-if="imageData.FNumber"/>
+            <FocalLength :focalLength="imageData.FocalLength" v-if="imageData.FocalLength"/>
+            <ShutterSpeed :exposureTime="imageData.ExposureTime" v-if="imageData.ExposureTime"/>
+          </div>
         </template>
       </template>
       <div v-else :class="$style.noData">
@@ -24,6 +29,9 @@ import cameraSvg from '../icons/camera.svg';
 import Spinner from './Spinner.vue';
 import Limited from './Limited.vue';
 import Camera from './Camera.vue';
+import Aperture from './Aperture.vue';
+import FocalLength from './FocalLength.vue';
+import ShutterSpeed from './ShutterSpeed.vue';
 
 export default {
   props: ['img'],
@@ -32,6 +40,9 @@ export default {
     Spinner,
     Limited,
     Camera,
+    Aperture,
+    FocalLength,
+    ShutterSpeed,
   },
 
   data() {
@@ -51,6 +62,7 @@ export default {
 
       this.getImageData()
         .then(data => {
+          console.log(data);
           this.imageData = {
             ready: true,
             ...data,
@@ -61,6 +73,15 @@ export default {
   },
 
   computed: {
+    hasCaptureData() {
+      const d = this.imageData;
+
+      if (!d) {
+        return;
+      }
+
+      return !!(d.FNumber);
+    },
     imagePosition() {
       if (!this.img) {
         return;
@@ -246,5 +267,12 @@ $finalOpacity: .92;
   font-size: 14px;
   padding: 12px;
   text-align: center;
+}
+
+.captureData {
+  border-top: 1px solid #ddd;
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 15px;
 }
 </style>
