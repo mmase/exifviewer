@@ -3,6 +3,7 @@
 </template>
 
 <script>
+import $ from 'jquery';
 import Viewer from './components/Viewer.vue';
 
 export default {
@@ -35,7 +36,7 @@ export default {
       return el === this.$refs.viewer.$el || this.$refs.viewer.$el.contains(el);
     },
     bindMouseEvents() {
-      window.addEventListener('mouseover', e => {
+      $(window).mouseover(e => {
         const el = this.getElementFromEvent(e);
 
         if (el && el.tagName) {
@@ -48,9 +49,7 @@ export default {
             this.img = el;
           }
         }
-      });
-
-      window.addEventListener('mouseout', e => {
+      }).mouseout(e => {
         const el = this.getElementFromEvent(e);
         const cached = this.img;
 
