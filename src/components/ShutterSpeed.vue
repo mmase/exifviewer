@@ -12,29 +12,7 @@ export default {
 
   computed: {
     shutterSpeed() {
-      return this.exposureTime && this.getFraction(this.exposureTime);
-    },
-  },
-  methods: {
-    getFraction(fraction) {
-      function gcd(a, b) {
-        if (b < 0.0000001) {
-          return a;
-        }
-        return gcd(b, Math.floor(a % b));
-      };
-
-      const len = fraction.toString().length - 2;
-
-      let denominator = Math.pow(10, len);
-      let numerator = fraction * denominator;
-
-      const divisor = gcd(numerator, denominator);
-
-      numerator /= divisor;
-      denominator /= divisor;
-
-      return `${Math.floor(numerator)}/${Math.floor(denominator)}s`;
+      return `${this.exposureTime.numerator}/${this.exposureTime.denominator}`;
     },
   },
 };

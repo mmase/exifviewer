@@ -1,7 +1,9 @@
 <template>
   <div :class="$style.container">
     <img :class="$style.icon" :src="`../public/img/icons/${flashIcon}.png`" title="Flash">
-    <div :class="$style.value">{{flashLabel}}</div>
+    <div :class="$style.value">
+      <span>{{flashLabel}}</span>
+    </div>
   </div>
 </template>
 
@@ -39,7 +41,10 @@ export default {
 }
 
 .value {
+  align-items: center;
+  display: flex;
   font-size: 11px;
+  height: 28px;
   left: 22px;
   position: absolute;
   top: 13px;

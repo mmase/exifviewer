@@ -1,5 +1,7 @@
+import canon from './cameras/canon';
+import leica from './cameras/leica';
+
 export default {
-  // Canon
-  'Canon EOS 5D Mark II': 'canon-slr',
-  'Canon EOS 6D': 'canon-slr',
+  canon,
+  leica,
 };

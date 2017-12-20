@@ -6,11 +6,11 @@
         <Spinner v-if="!imageData.ready"/>
         <template v-else>
           <Limited v-if="imageData.LimitedData"/>
-          <Camera :model="imageData.Model" :lens="imageData.LensModel" v-if="imageData.Model || imageData.LensModel"/>
+          <Camera :make="imageData.Make" :model="imageData.Model" :lens="imageData.LensModel" v-if="imageData.Model || imageData.LensModel"/>
           <div :class="$style.captureData" v-if="hasCaptureData">
-            <Aperture :fnumber="imageData.FNumber" v-if="imageData.FNumber"/>
-            <FocalLength :focalLength="imageData.FocalLength" v-if="imageData.FocalLength"/>
-            <ShutterSpeed :exposureTime="imageData.ExposureTime" v-if="imageData.ExposureTime"/>
+            <Aperture :fnumber="imageData.FNumber.value" v-if="imageData.FNumber && imageData.FNumber.value"/>
+            <FocalLength :focalLength="imageData.FocalLength.value" v-if="imageData.FocalLength && imageData.FocalLength.value"/>
+            <ShutterSpeed :exposureTime="imageData.ExposureTime" v-if="imageData.ExposureTime && imageData.ExposureTime.numerator && imageData.ExposureTime.denominator"/>
             <Flash :flash="imageData.Flash" v-if="imageData.Flash"/>
             <Iso :iso="imageData.ISO || imageData.ISOSpeedRatings" v-if="imageData.ISO || imageData.ISOSpeedRatings"/>
             <MeteringMode :meteringMode="imageData.MeteringMode" v-if="imageData.MeteringMode && imageData.MeteringMode !== 'Unknown' && imageData.MeteringMode !== 'Other'"/>
@@ -71,7 +71,6 @@ export default {
 
       this.getImageData()
         .then(data => {
-          console.log(data);
           this.imageData = {
             ready: true,
             ...data,
@@ -127,42 +126,35 @@ export default {
           reject();
         }
 
-        this.getExifData().then(resolve).catch(() => {
-          this.getXmpData().then(resolve).catch(reject);
-        });
+        this.getExifData(resolve, reject);
       });
     },
-    getExifData() {
-      return new Promise((resolve, reject) => {
-        exiftool.getData(this.img, () => {
-          const tags = exiftool.getAllTags(this.img);
-
-          if (!_.isEmpty(tags)) {
-            resolve(tags);
-          }
-
-          reject();
-        });
+    getExifData(resolve, reject) {
+      exiftool.getData(this.img, () => {
+        const tags = exiftool.getAllTags(this.img);
+        if (!_.isEmpty(tags)) {
+          resolve(tags);
+          return;
+        }
+        this.getXmpData(resolve, reject);
       });
     },
-    getXmpData() {
-      return new Promise((resolve, reject) => {
-        EXIF.enableXmp();
-        EXIF.getData(this.img, function() {
-          const xmp = this.xmpdata &&
-                      this.xmpdata['x:xmpmeta'] &&
-                      this.xmpdata['x:xmpmeta']['rdf:RDF'] &&
-                      this.xmpdata['x:xmpmeta']['rdf:RDF']['rdf:Description'] &&
-                      this.xmpdata['x:xmpmeta']['rdf:RDF']['rdf:Description']['@attributes'];
-          if (!_.isEmpty(xmp)) {
-            resolve({
-              LensModel: xmp['aux:Lens'],
-              LimitedData: true,
-            });
-          }
-
-          reject();
-        });
+    getXmpData(resolve, reject) {
+      EXIF.enableXmp();
+      EXIF.getData(this.img, function() {
+        const xmp = this.xmpdata &&
+                    this.xmpdata['x:xmpmeta'] &&
+                    this.xmpdata['x:xmpmeta']['rdf:RDF'] &&
+                    this.xmpdata['x:xmpmeta']['rdf:RDF']['rdf:Description'] &&
+                    this.xmpdata['x:xmpmeta']['rdf:RDF']['rdf:Description']['@attributes'];
+        if (!_.isEmpty(xmp)) {
+          resolve({
+            LensModel: xmp['aux:Lens'],
+            LimitedData: true,
+          });
+          return;
+        }
+        reject();
       });
     },
     getElementPosition(el) {
