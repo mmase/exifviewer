@@ -11,7 +11,7 @@
       <div :class="[$style.lens, {[$style.lensOnly]: !model}]" v-if="lens">
         <img :class="$style.lensIcon" :src="`../public/img/icons/lens.png`" title="Lens">
         <div :class="$style.lensModel">
-          {{lens}}
+          {{formattedLens}}
           <div :class="$style.external" v-html="externalSvg"></div>
         </div>
       </div>
@@ -34,8 +34,8 @@ export default {
 
   computed: {
     absentMake() {
-      const make = this.make.toLowerCase();
-      const model = this.model.toLowerCase();
+      const make = this.make && this.make.toLowerCase() || '';
+      const model = this.model && this.model.toLowerCase() || '';
       let formatted = '';
 
       if (model.includes(make)) {
@@ -56,8 +56,22 @@ export default {
     formattedModel() {
       return this.model.replace('NIKON', 'Nikon');
     },
+    formattedLens() {
+      const make = this.make && this.make.toLowerCase()  || '';
+      const model = this.model && this.model.toLowerCase() || '';
+
+      if (!make.includes('nikon') && !model.includes('nikon')) {
+        return this.lens;
+      }
+
+      let [low, high, speed] = this.lens.split(',');
+
+      high = low === high ? '' : `-${high}`;
+
+      return `${low}${high}mm f/${speed}`;
+    },
     iconPath() {
-      const make = this.make.toLowerCase().split(' ')[0];
+      const make = this.make && this.make.toLowerCase().split(' ')[0];
 
       if (!cameras[make]) {
         return 'default';
