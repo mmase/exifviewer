@@ -4,8 +4,8 @@
   "description": "",
   "main": "bundle.js",
   "dependencies": {
-    "exif-js": "^2.3.0",
-    "exiftool.js": "^0.3.0",
+    "exif-js": "github:mmase/exif-js",
+    "exiftool.js": "github:mmase/exiftool.js",
     "lodash": "^4.17.4",
     "vue": "^2.5.11"
   },
