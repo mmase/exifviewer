@@ -40,7 +40,7 @@ import Flash from './Flash.vue';
 import MeteringMode from './MeteringMode.vue';
 
 export default {
-  props: ['img'],
+  props: ['img', 'ready'],
 
   components: {
     Spinner,
@@ -62,21 +62,23 @@ export default {
   },
 
   watch: {
-    img(img) {
-      if (img) {
+    ready(ready) {
+      if (this.img) {
         this.imageData = {
           ready: false,
         };
       }
 
-      this.getImageData()
-        .then(data => {
-          this.imageData = {
-            ready: true,
-            ...data,
-          };
-        })
-        .catch(() => this.imageData = false);
+      if (ready) {
+        this.getImageData()
+          .then(data => {
+            this.imageData = {
+              ready: true,
+              ...data,
+            };
+          })
+          .catch(() => this.imageData = false);
+      }
     },
   },
 

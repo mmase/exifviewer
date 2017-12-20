@@ -1,5 +1,5 @@
 <template>
-  <Viewer :img="img" v-show="img" ref="viewer"/>
+  <Viewer :img="img" :ready="ready" v-show="img" ref="viewer"/>
 </template>
 
 <script>
@@ -12,6 +12,7 @@ export default {
 
   data() {
     return {
+      ready: false,
       img: null,
       timeout: null,
     };
@@ -40,6 +41,7 @@ export default {
         if (el && el.tagName) {
           if (this.elementIsButton(el)) {
             clearTimeout(this.timeout);
+            this.ready = true;
           }
           else if (this.elementIsImage(el)) {
             this.img = el;
@@ -52,6 +54,7 @@ export default {
         const cached = this.img;
 
         if (this.elementIsButton(el)) {
+          this.ready = false;
           return;
         }
 
