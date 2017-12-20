@@ -5,7 +5,7 @@
     </div>
     <div :class="$style.content">
       <div :class="$style.model" v-if="model">
-        {{model}}
+        {{absentMake}} {{model}}
         <div :class="$style.external" v-html="externalSvg"></div>
       </div>
       <div :class="[$style.lens, {[$style.lensOnly]: !model}]" v-if="lens">
@@ -33,6 +33,21 @@ export default {
   },
 
   computed: {
+    absentMake() {
+      const make = this.make.toLowerCase();
+      let formatted = '';
+
+      switch (make) {
+        case 'fujifilm':
+          formatted = this.capitalizeFirstLetter(make);
+          break;
+
+        default:
+          break;
+      }
+
+      return formatted;
+    },
     iconPath() {
       const make = this.make.toLowerCase();
 
@@ -56,6 +71,12 @@ export default {
       });
 
       return `${make}/${match}`;
+    },
+  },
+
+  methods: {
+    capitalizeFirstLetter(string) {
+      return string.charAt(0).toUpperCase() + string.slice(1);
     },
   },
 };
