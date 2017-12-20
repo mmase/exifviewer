@@ -1,7 +1,7 @@
 <template>
   <div :class="$style.container">
     <img :class="$style.icon" :src="`../public/img/icons/shutter-speed.png`" title="Shutter speed">
-    <div :class="$style.value">{{shutterSpeed}}</div>
+    <div :class="$style.value">{{shutterSpeed}}s</div>
   </div>
 </template>
 
@@ -12,6 +12,9 @@ export default {
 
   computed: {
     shutterSpeed() {
+      if (this.exposureTime.value >= 1) {
+        return this.exposureTime.value;
+      }
       return `${this.exposureTime.numerator}/${this.exposureTime.denominator}`;
     },
   },

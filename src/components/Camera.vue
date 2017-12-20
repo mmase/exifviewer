@@ -5,7 +5,7 @@
     </div>
     <div :class="$style.content">
       <div :class="$style.model" v-if="model">
-        {{absentMake}} {{model}}
+        {{absentMake}} {{formattedModel}}
         <div :class="$style.external" v-html="externalSvg"></div>
       </div>
       <div :class="[$style.lens, {[$style.lensOnly]: !model}]" v-if="lens">
@@ -35,7 +35,12 @@ export default {
   computed: {
     absentMake() {
       const make = this.make.toLowerCase();
+      const model = this.model.toLowerCase();
       let formatted = '';
+
+      if (model.includes(make)) {
+        return formatted;
+      }
 
       switch (make) {
         case 'fujifilm':
@@ -48,14 +53,14 @@ export default {
 
       return formatted;
     },
+    formattedModel() {
+      return this.model.replace('NIKON', 'Nikon');
+    },
     iconPath() {
-      const make = this.make.toLowerCase();
+      const make = this.make.toLowerCase().split(' ')[0];
 
       if (!cameras[make]) {
-        if (!this.lens) {
-          return 'generic-mirrorless';
-        }
-        return 'generic-slr';
+        return 'default';
       }
 
       const lines = Object.entries(cameras[make]);
@@ -70,7 +75,7 @@ export default {
         });
       });
 
-      return `${make}/${match}`;
+      return match ? `${make}/${match}` : `${make}/default`;
     },
   },
 
@@ -83,7 +88,7 @@ export default {
 </script>
 
 <style module lang="scss">
-$linkColor: #0087E2;
+$linkColor: #0087e2;
 
 .camera {
   display: flex;
