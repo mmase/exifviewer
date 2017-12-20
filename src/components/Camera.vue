@@ -8,11 +8,16 @@
         {{absentMake}} {{formattedModel}}
         <div :class="$style.external" v-html="externalSvg"></div>
       </div>
-      <div :class="[$style.lens, {[$style.lensOnly]: !model}]" v-if="lens">
+      <div :class="[$style.lens, {[$style.lensOnly]: !model}]">
         <img :class="$style.lensIcon" :src="`../public/img/icons/lens.png`" title="Lens">
-        <div :class="$style.lensModel">
-          {{formattedLens}}
-          <div :class="$style.external" v-html="externalSvg"></div>
+        <div :class="[$style.lensModel, {[$style.hasLens]: lens}]">
+          <template v-if="lens">
+            {{formattedLens}}
+            <div :class="$style.external" v-html="externalSvg"></div>
+          </template>
+          <template v-else>
+            Lens information not available.
+          </template>
         </div>
       </div>
     </div>
@@ -117,7 +122,7 @@ $linkColor: #0087e2;
 }
 
 .model,
-.lensModel {
+.lensModel.hasLens {
   cursor: pointer;
   display: inline-block;
 

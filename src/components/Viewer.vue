@@ -63,21 +63,21 @@ export default {
 
   watch: {
     ready(ready) {
-      if (this.img) {
+      if (ready) {
         this.imageData = {
           ready: false,
         };
-      }
 
-      if (ready) {
-        this.getImageData()
-          .then(data => {
-            this.imageData = {
-              ready: true,
-              ...data,
-            };
-          })
-          .catch(() => this.imageData = false);
+        if (this.img) {
+          this.getImageData()
+            .then(data => {
+              this.imageData = {
+                ready: true,
+                ...data,
+              };
+            })
+            .catch(() => this.imageData = false);
+        }
       }
     },
   },

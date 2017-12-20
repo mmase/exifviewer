@@ -31,7 +31,7 @@ export default {
     elementIsImage(el) {
       return el.tagName === 'IMG';
     },
-    elementIsButton(el) {
+    elementIsViewer(el) {
       return el === this.$refs.viewer.$el || this.$refs.viewer.$el.contains(el);
     },
     bindMouseEvents() {
@@ -39,11 +39,12 @@ export default {
         const el = this.getElementFromEvent(e);
 
         if (el && el.tagName) {
-          if (this.elementIsButton(el)) {
+          if (this.elementIsViewer(el)) {
             clearTimeout(this.timeout);
             this.ready = true;
           }
           else if (this.elementIsImage(el)) {
+            this.ready = false;
             this.img = el;
           }
         }
@@ -53,8 +54,7 @@ export default {
         const el = this.getElementFromEvent(e);
         const cached = this.img;
 
-        if (this.elementIsButton(el)) {
-          this.ready = false;
+        if (this.elementIsViewer(el)) {
           return;
         }
 
@@ -62,8 +62,9 @@ export default {
           this.timeout = setTimeout(() => {
             if (cached === this.img) {
               this.img = null;
+              this.ready = false;
             }
-          }, 1);
+          }, 5);
         }
       });
     },
