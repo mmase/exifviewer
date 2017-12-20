@@ -60,7 +60,7 @@ export default {
             if (cached === this.img) {
               this.img = null;
             }
-          }, 10);
+          }, 1);
         }
       });
     },
