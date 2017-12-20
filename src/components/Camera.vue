@@ -114,6 +114,8 @@ $linkColor: #0087e2;
 }
 
 .cameraIcon {
+  align-items: center;
+  display: flex;
   width: 75px;
 }
 
